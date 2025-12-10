@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{MANGA_TITLE}} - Capitulo {{CHAPTER_NUM}}</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-buttons {
+            position: fixed;
+            top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+        button {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        button:hover { 
+            background: #555; 
+        }
+        button:disabled { 
+            background: #222; 
+            cursor: not-allowed; 
+            opacity: 0.5;
+        }
+        .image-container {
+            text-align: center;
+            padding: 60px 0 20px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 5px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <button onclick="location.href='{{PREV_CHAPTER}}'" {{PREV_DISABLED}}>◀ Anterior</button>
+        <button onclick="location.href='../index.html'">{{MANGA_TITLE}}</button>
+        <button onclick="location.href='/'">Inicio</button>
+        <button onclick="location.href='{{NEXT_CHAPTER}}'" {{NEXT_DISABLED}}>Siguiente ▶</button>
+    </div>
+    
+    <div class="image-container">
+{{IMAGES}}
+    </div>
+    
+    <script>
+        // Guardar progreso solo al cambiar de capitulo o llegar al final
+        const mangaId = {{MANGA_ID}};
+        const currentChapter = '{{CHAPTER_NUM}}';
+        const hasNext = '{{NEXT_CHAPTER}}' !== '#';
+        let progresoGuardado = false;
+        
+        function guardarProgreso() {
+            if (progresoGuardado) return;
+            progresoGuardado = true;
+            fetch('/guardar_progreso?manga_id=' + mangaId + '&capitulo=' + currentChapter)
+                .catch(err => console.error('Error guardando progreso:', err));
+        }
+        
+        // Detectar scroll al final (solo si es ultimo capitulo)
+        if (!hasNext) {
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight;
+                
+                // Si llego al 95% del final
+                if (scrollTop + clientHeight >= scrollHeight - 100) {
+                    guardarProgreso();
+                }
+            });
+        }
+        
+        // Navegacion con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && '{{PREV_CHAPTER}}' !== '#') {
+                location.href = '{{PREV_CHAPTER}}';
+            } else if (e.key === 'ArrowRight' && hasNext) {
+                guardarProgreso();
+                location.href = '{{NEXT_CHAPTER}}';
+            } else if (e.key === 'Home') {
+                location.href = '/';
+            }
+        });
+        
+        // Guardar al hacer click en boton siguiente
+                const allButtons = document.querySelectorAll('button');
+                allButtons.forEach(btn => {
+                    if (btn.textContent.includes('Siguiente') && hasNext) {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            guardarProgreso();
+                            setTimeout(() => location.href = '{{NEXT_CHAPTER}}', 100);
+                        });
+                    }
+                });
+
+        
+    </script>
+</body>
+</html>

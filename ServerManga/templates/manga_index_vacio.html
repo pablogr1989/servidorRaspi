@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{MANGA_TITLE}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            border: 2px solid #ff9900;
+            background: #2a2a2a;
+        }
+        h1 {
+            color: #ff9900;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #aaa;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .icon {
+            font-size: 80px;
+            margin: 20px 0;
+        }
+        a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📚</div>
+        <h1>{{MANGA_TITLE}}</h1>
+        <p>Este manga aun no ha sido descargado</p>
+        <p style="font-size: 14px; margin-top: 30px;">
+            <a href="/">← Volver al inicio</a>
+        </p>
+    </div>
+</body>
+</html>

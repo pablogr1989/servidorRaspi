@@ -1,0 +1,32 @@
+# Ignorar el entorno virtual
+*venv/
+env/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Archivos de logs
+*.log
+
+# Ignorar configuración de editores
+.idea/
+.vscode/
+
+# Archivos de cobertura de código
+htmlcov/
+*.cover
+*.coverage
+*.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# Archivos específicos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivo con la configuracion de la api de openai
+.env
