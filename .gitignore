@@ -30,3 +30,6 @@ Thumbs.db
 
 # Archivo con la configuracion de la api de openai
 .env
+
+Memorias HTML/
+Info.txt
